@@ -33,4 +33,4 @@ EXPOSE 5001
 # Step 9: Specify the default command to run your application when the container starts.
 # This should usually run the Node.js app with `npm start`.
 
-CMD[ "node", "server.js" ]
+CMD [ "node", "server.js" ]
