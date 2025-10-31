@@ -1,7 +1,16 @@
+version: '3'
+
 services:
   # Backend Service
   backend:
     # Connect your build to the FOLDER location of your backend Dockerfile
+    build : ./backend
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./backend:/app
+      - backend-node-modules:/app/node_modules
+
 
     
     # Connect an open localhost port to your exposed frontend port
@@ -18,10 +27,18 @@ services:
       - NODE_ENV=production
     
     # Connect your backend to the network name created below
+    networks:
+      - app-network
 
   # Frontend Service
   frontend:
     # Connect your build to the FOLDER location of your frontend Dockerfile
+    build : ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - frontend-node-modules:/app/node_modules
 
     # Connect an open localhost port to your exposed frontend port
 
@@ -40,10 +57,14 @@ services:
     depends_on:
       - backend
     # Connect your frontend to the network name created below
+    networks:
+      - app-network
 
 volumes:
   # list the names of the two volumes you created to hold the node_modules
   #     - Hint: the format looks like: {volume name}:
+  backend-node-modules:
+  frontend-node-modules:
 
 networks:
   app-network:
